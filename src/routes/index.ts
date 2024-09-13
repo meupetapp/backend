@@ -1,6 +1,7 @@
+import { RouteOptions } from 'fastify';
 import { getHomePage } from '../controllers/homeController.js';
 
-const routes = [
+const routes: RouteOptions[] = [
   {
     method: 'GET',
     url: '/',
