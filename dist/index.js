@@ -6,12 +6,12 @@ dotenv.config();
 const fastify = Fastify({ logger: true });
 routes.forEach((route) => fastify.route(route));
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.log('Error in MongoDB connection', err));
+    .then(() => console.log('Conectado ao MongoDB'))
+    .catch(err => console.log('Erro na conexão ao MongoDB', err));
 const start = async () => {
     try {
         await fastify.listen({ port: parseInt(process.env.PORT), host: 'localhost' });
-        console.log(`Server running on http://localhost:${process.env.PORT}`);
+        console.log(`Servidor rodando em http://localhost:${process.env.PORT}`);
     }
     catch (err) {
         fastify.log.error(err);
