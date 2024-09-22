@@ -1,7 +1,7 @@
 import Fastify, { FastifyInstance, RouteOptions } from 'fastify';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import routes from './routes/index.js';
+import routes from './routes/index';
 
 dotenv.config();
 

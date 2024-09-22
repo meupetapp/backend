@@ -1,6 +1,12 @@
 import { RouteOptions } from 'fastify';
 import { getHomePage } from '../controllers/homeController.js';
 import { register, login } from '../controllers/userController.js';
+import {
+  create as createPet,
+  deletePet,
+  listByUser,
+  upate as updatePet
+} from '../controllers/petController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -18,6 +24,26 @@ const routes: RouteOptions[] = [
     url: '/login',
     handler: login,
   },
+  {
+    method: 'POST',
+    url: '/pet',
+    handler: createPet
+  },
+  {
+    method: 'PUT',
+    url: '/pet',
+    handler: updatePet
+  },
+  {
+    method: 'DELETE',
+    url: '/pet',
+    handler: deletePet
+  },
+  {
+    method: 'GET',
+    url: '/user/:userId/pets',
+    handler: listByUser
+  }
 ];
 
 export default routes;

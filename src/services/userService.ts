@@ -30,6 +30,24 @@ export const loginUser = async (email: string, password: string): Promise<string
   return token;
 };
 
+export const findUserByToken = async (token: string): Promise<IUser | null> => {
+  try {
+    const clearedToken = token.replace('Bearer ', '');
+    const { id } = jwt.verify(clearedToken, JWT_SECRET) as any;
+    return User.findById(id);
+  } catch (error) {
+    throw new Error('Usuário não encontrado');
+  }
+}
+
+export const findUserById = async (id: string): Promise<IUser | null> => {
+  try {
+    return User.findById(id);
+  } catch (error) {
+    throw new Error('Usuário não encontrado');
+  }
+}
+
 export const verifyToken = (token: string): any => {
   try {
     return jwt.verify(token, JWT_SECRET);
