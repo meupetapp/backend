@@ -2,6 +2,8 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { findUserById, findUserByToken } from "../services/userService";
 import { createPet, findByUser, updatePet } from "../services/petService";
 import { CreatePetDTO, UpdatePetDTO } from "../models/petModel";
+import { checkUserPermission } from "../services/userService";
+import Pet from "../models/petModel";
 
 export const create = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
@@ -16,9 +18,9 @@ export const create = async (req: FastifyRequest, reply: FastifyReply) => {
     const err = error as Error;
     reply.code(400).send({ error: err.message });
   }
-}
+};
 
-export const upate = async (req: FastifyRequest, reply: FastifyReply) => {
+export const update = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
     const pet = req.body as UpdatePetDTO;
     const user = await findUserByToken(req.headers.authorization || '');
@@ -31,7 +33,7 @@ export const upate = async (req: FastifyRequest, reply: FastifyReply) => {
     const err = error as Error;
     reply.code(400).send({ error: err.message });
   }
-}
+};
 
 export const deletePet = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
@@ -46,7 +48,7 @@ export const deletePet = async (req: FastifyRequest, reply: FastifyReply) => {
     const err = error as Error;
     reply.code(400).send({ error: err.message });
   }
-}
+};
 
 export const listByUser = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
@@ -64,4 +66,30 @@ export const listByUser = async (req: FastifyRequest, reply: FastifyReply) => {
     const err = error as Error;
     reply.code(400).send({ error: err.message });
   }
-}
+};
+
+export const getPetDetails = async (req: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const petId = (req.params as any).petId;
+    const userId = req.headers.authorization; 
+    
+    if (!userId) {
+      return reply.code(401).send({ message: "Usuário não fornecido."});
+    }
+
+    const hasPermission = await checkUserPermission(userId, petId);
+    
+    if (!hasPermission) {
+      return reply.code(403).send({ message: "Você não tem permissão para acessar esse pet." });
+    }
+
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      return reply.code(404).send({ message: "Pet não encontrado." });
+    }
+
+    reply.send({ pet });
+  } catch (error) {
+    reply.code(500).send({ message: "Erro na busca." });
+  }
+};

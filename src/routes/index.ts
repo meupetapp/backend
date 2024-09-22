@@ -4,8 +4,9 @@ import { register, login } from '../controllers/userController.js';
 import {
   create as createPet,
   deletePet,
+  getPetDetails,
   listByUser,
-  upate as updatePet
+  update as updatePet
 } from '../controllers/petController.js';
 
 const routes: RouteOptions[] = [
@@ -43,6 +44,11 @@ const routes: RouteOptions[] = [
     method: 'GET',
     url: '/user/:userId/pets',
     handler: listByUser
+  },
+  {
+    method: 'GET',
+    url: '/pet/:petId',
+    handler: getPetDetails
   }
 ];
 

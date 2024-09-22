@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { registerUser, loginUser } from '../services/userService.js';
+import { registerUser, loginUser } from '../services/userService';
 
 export const register = async (req: FastifyRequest, reply: FastifyReply) => {
   try {

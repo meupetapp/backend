@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User, { IUser } from '../models/userModel.js';
+import User, { IUser } from '../models/userModel';
+import UserPermission from "../models/userPermission";
+import Pet from "../models/petModel";
 
 const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
@@ -54,4 +56,14 @@ export const verifyToken = (token: string): any => {
   } catch (error) {
     throw new Error('Token inválido');
   }
+};
+
+export const checkUserPermission = async (userId: string, petId: string): Promise<boolean> => {
+  const isOwner = await Pet.findOne({ _id: petId, userId });
+
+  if (isOwner) return true;
+
+  const hasPermission = await UserPermission.findOne({ userId, petId, status: 'active' });
+
+  return !!hasPermission;
 };
