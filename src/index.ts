@@ -2,12 +2,17 @@ import Fastify, { FastifyInstance, RouteOptions } from 'fastify';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import routes from './routes/index';
+import cors from '@fastify/cors'; 
 
 dotenv.config();
 
 const fastify: FastifyInstance = Fastify({ logger: true });
 
 routes.forEach((route: RouteOptions) => fastify.route(route));
+
+fastify.register(cors, {
+  origin: '*'
+});
 
 mongoose.connect(process.env.MONGO_URI as string)
   .then(() => console.log('Conectado ao MongoDB'))
