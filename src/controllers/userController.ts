@@ -15,8 +15,8 @@ export const register = async (req: FastifyRequest, reply: FastifyReply) => {
 export const login = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
     const { email, password } = req.body as any;
-    const token = await loginUser(email, password);
-    reply.send({ message: 'Login com sucesso', token });
+    const res = await loginUser(email, password);
+    reply.send({ message: 'Login com sucesso', ...res });
   } catch (error) {
     const err = error as Error;
     reply.code(400).send({ error: err.message });

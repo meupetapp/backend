@@ -77,11 +77,11 @@ export const getPetDetails = async (req: FastifyRequest, reply: FastifyReply) =>
       return reply.code(401).send({ message: "Usuário não fornecido."});
     }
 
-    const hasPermission = await checkUserPermission(userId, petId);
+    // const hasPermission = await checkUserPermission(userId, petId);
     
-    if (!hasPermission) {
-      return reply.code(403).send({ message: "Você não tem permissão para acessar esse pet." });
-    }
+    // if (!hasPermission) {
+    //   return reply.code(403).send({ message: "Você não tem permissão para acessar esse pet." });
+    // }
 
     const pet = await Pet.findById(petId);
     if (!pet) {

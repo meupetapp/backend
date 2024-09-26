@@ -17,7 +17,7 @@ export const registerUser = async (username: string, email: string, password: st
   return newUser.save();
 };
 
-export const loginUser = async (email: string, password: string): Promise<string | null> => {
+export const loginUser = async (email: string, password: string): Promise<{ token: string, userId: string } | null> => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new Error('Usuário não encontrado');
@@ -29,7 +29,7 @@ export const loginUser = async (email: string, password: string): Promise<string
   }
 
   const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-  return token;
+  return { token, userId: user.id };
 };
 
 export const findUserByToken = async (token: string): Promise<IUser | null> => {
