@@ -8,6 +8,7 @@ import {
   listByUser,
   update as updatePet
 } from '../controllers/petController.js';
+import { create } from '../controllers/userPermissionController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -49,6 +50,11 @@ const routes: RouteOptions[] = [
     method: 'GET',
     url: '/pet/:petId',
     handler: getPetDetails
+  },
+  {
+    method: 'POST',
+    url: '/permission',
+    handler: create
   }
 ];
 
