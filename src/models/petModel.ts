@@ -10,7 +10,7 @@ export interface IPet extends Document {
   updatedAt: Date;
   isAdopted: boolean;
   dateAdoption?: Date;
-  birthDate: Date
+  birthDate: Date;
 }
 
 export interface CreatePetDTO {

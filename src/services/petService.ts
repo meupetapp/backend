@@ -25,3 +25,11 @@ export const findByUser = async (userId: string): Promise<IPet[]> => {
     throw new Error('Pets não encontrados');
   }
 }
+
+export const findById = async (id: string): Promise<IPet | null> => {
+  try {
+    return Pet.findById(id);
+  } catch (error) {
+    throw new Error('Pet não encontrado');
+  }
+}

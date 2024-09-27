@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/userModel';
-import UserPermission from "../models/userPermission";
+import UserPermission from "../models/userPermissionModel";
 import Pet from "../models/petModel";
 
 const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
