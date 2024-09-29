@@ -1,6 +1,10 @@
 import { RouteOptions } from 'fastify';
 import { getHomePage } from '../controllers/homeController.js';
-import { register, login } from '../controllers/userController.js';
+import { 
+  register, 
+  login, 
+  getUserInfo 
+} from '../controllers/userController.js';
 import {
   create as createPet,
   deletePet,
@@ -55,6 +59,11 @@ const routes: RouteOptions[] = [
     method: 'POST',
     url: '/permission',
     handler: create
+  },
+  {
+    method: 'POST',
+    url: '/me',
+    handler: getUserInfo
   }
 ];
 
