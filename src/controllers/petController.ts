@@ -4,6 +4,7 @@ import { createPet, findByUser, updatePet } from "../services/petService";
 import { CreatePetDTO, UpdatePetDTO } from "../models/petModel";
 import { checkUserPermission } from "../services/userService";
 import Pet from "../models/petModel";
+import { findActivitiesByPetId } from "../services/activityService";
 
 export const create = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
@@ -84,11 +85,13 @@ export const getPetDetails = async (req: FastifyRequest, reply: FastifyReply) =>
     // }
 
     const pet = await Pet.findById(petId);
+    const activities = await findActivitiesByPetId(petId);
+
     if (!pet) {
       return reply.code(404).send({ message: "Pet não encontrado." });
     }
 
-    reply.send({ pet });
+    reply.send({ pet, activities });
   } catch (error) {
     reply.code(500).send({ message: "Erro na busca." });
   }
