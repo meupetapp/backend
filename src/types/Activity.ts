@@ -1,6 +1,6 @@
 import Note from "./Note";
 
-interface Activity {
+export default interface Activity {
   title: string;
   type: string;
   description: string;
@@ -11,4 +11,6 @@ interface Activity {
   notes: Note[];
   createdBy: string;
   time: Date;
+  tags: string[]; 
+  completed: boolean;
 }

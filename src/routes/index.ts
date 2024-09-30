@@ -13,6 +13,7 @@ import {
   update as updatePet
 } from '../controllers/petController.js';
 import { create } from '../controllers/userPermissionController.js';
+import { getActivities, addActivity } from '../controllers/activityController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -61,10 +62,20 @@ const routes: RouteOptions[] = [
     handler: create
   },
   {
-    method: 'POST',
+    method: 'GET',
     url: '/me',
     handler: getUserInfo
-  }
+  },
+  {
+    method: 'GET',
+    url: '/activities',
+    handler: getActivities
+  },
+  {
+    method: 'POST',
+    url: '/activities',
+    handler: addActivity
+  },
 ];
 
 export default routes;

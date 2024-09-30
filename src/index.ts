@@ -14,7 +14,7 @@ fastify.register(cors, {
   origin: '*'
 });
 
-mongoose.connect(process.env.MONGO_URI as string)
+mongoose.connect(process.env.MONGODB_URI as string)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch(err => console.log('Erro na conexão ao MongoDB', err));
 
