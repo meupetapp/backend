@@ -10,6 +10,7 @@ import {
 } from '../controllers/petController.js';
 import { create } from '../controllers/userPermissionController.js';
 import { createActivityController, listActivitiesByPetId } from '../controllers/activityController.js';
+import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -66,6 +67,16 @@ const routes: RouteOptions[] = [
     method: 'GET',
     url: '/activity/pet/:petId',
     handler: listActivitiesByPetId
+  },
+  {
+  method: 'POST',
+    url: '/generate-upload-url',
+    handler: generateUploadUrl
+  },
+  {
+  method: 'GET',
+    url: '/get-download-url',
+    handler: generateDownloadUrl
   }
 ];
 
