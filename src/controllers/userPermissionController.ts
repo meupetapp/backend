@@ -1,15 +1,17 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { createUserPermission } from "../services/userPermissionService";
-import { findUserByToken } from "../services/userService";
+import { findByEmail, findUserByToken } from "../services/userService";
 
 export const create = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
-    const { userId, petId, permissions } = req.body as any;
+    const { userEmail, petId, permissions } = req.body as any;
     const user = await findUserByToken(req.headers.authorization || '');
-    if (!user) {
+    const userToReceivePermission = await findByEmail(userEmail);
+
+    if (!user || !userToReceivePermission) {
       throw new Error('Usuário não encontrado');
     }
-    const userPermission = await createUserPermission(userId, petId, permissions, user.id);
+    const userPermission = await createUserPermission(userToReceivePermission._id, petId, permissions, user.id);
     reply.code(201).send({ message: 'Permissão criada com sucesso', userPermission });
   } catch (error) {
     const err = error as Error;

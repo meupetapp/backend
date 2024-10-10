@@ -42,6 +42,15 @@ export const findUserByToken = async (token: string): Promise<IUser | null> => {
   }
 }
 
+export const findByEmail = async (email: string): Promise<IUser | null> => {
+  try {
+    const response = await User.findOne({ email });
+    return response;
+  } catch (error) {
+    throw new Error('Usuário não encontrado');
+  }
+}
+
 export const findUserById = async (id: string): Promise<IUser | null> => {
   try {
     return User.findById(id);
