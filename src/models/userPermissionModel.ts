@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface IUserPermission extends Document {
   petId: string;
   userId: string;
+  username?: string;
   permissions: string[];
   sentAt: Date;
   status: string;

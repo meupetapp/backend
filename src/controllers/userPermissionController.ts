@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createUserPermission } from "../services/userPermissionService";
+import { createUserPermission, findUserPermissionsByPetId } from "../services/userPermissionService";
 import { findByEmail, findUserByToken } from "../services/userService";
 
 export const create = async (req: FastifyRequest, reply: FastifyReply) => {
@@ -13,6 +13,18 @@ export const create = async (req: FastifyRequest, reply: FastifyReply) => {
     }
     const userPermission = await createUserPermission(userToReceivePermission._id, petId, permissions, user.id);
     reply.code(201).send({ message: 'Permissão criada com sucesso', userPermission });
+  } catch (error) {
+    const err = error as Error;
+    reply.code(400).send({ error: err.message });
+  }
+}
+
+export const listUserPermissionsByPetId = async (req: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const { petId } = req.params as any;
+
+    const userPermissions = await findUserPermissionsByPetId(petId);
+    reply.code(200).send({ userPermissions });
   } catch (error) {
     const err = error as Error;
     reply.code(400).send({ error: err.message });

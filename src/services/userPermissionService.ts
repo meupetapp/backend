@@ -1,5 +1,6 @@
 import UserPermission, { IUserPermission } from "../models/userPermissionModel";
 import { findById } from "./petService";
+import { findUserById } from "./userService";
 
 export const createUserPermission = async (userId: string, petId: string, permissions: string[], ownerUserId: string): Promise<IUserPermission | null> => {
   const pet = await findById(petId);
@@ -8,4 +9,17 @@ export const createUserPermission = async (userId: string, petId: string, permis
   }
   const userPermission = new UserPermission({ userId, petId, permissions });
   return userPermission.save();
+}
+
+export const findUserPermissionsByPetId = async (petId: string): Promise<IUserPermission[]> => {
+  const userPermissions = await UserPermission.find({ petId });
+
+  const newResponse = await Promise.all(
+    userPermissions.map(async (userPermission) => {
+      const user = await findUserById(userPermission.userId);
+      return { ...userPermission.toObject(), username: user?.username }; // Use toObject() if using Mongoose to ensure proper structure
+    })
+  );
+
+  return newResponse as IUserPermission[];
 }
