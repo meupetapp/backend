@@ -9,7 +9,7 @@ import {
   update as updatePet
 } from '../controllers/petController.js';
 import { create } from '../controllers/userPermissionController.js';
-import { createActivityController, listActivitiesByPetId } from '../controllers/activityController.js';
+import { createActivityController, createCommentController, listActivitiesByPetId } from '../controllers/activityController.js';
 import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
 
 const routes: RouteOptions[] = [
@@ -69,14 +69,19 @@ const routes: RouteOptions[] = [
     handler: listActivitiesByPetId
   },
   {
-  method: 'POST',
+    method: 'POST',
     url: '/generate-upload-url',
     handler: generateUploadUrl
   },
   {
-  method: 'GET',
+    method: 'GET',
     url: '/get-download-url',
     handler: generateDownloadUrl
+  },
+  {
+    method: 'POST',
+    url: '/comment/activity/:activityId',
+    handler: createCommentController
   }
 ];
 
