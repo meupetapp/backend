@@ -11,6 +11,7 @@ import {
 import { create, listUserPermissionsByPetId } from '../controllers/userPermissionController.js';
 import { createActivityController, createCommentController, listActivitiesByPetId } from '../controllers/activityController.js';
 import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
+import { listSpecies } from '../controllers/speciesController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -87,7 +88,12 @@ const routes: RouteOptions[] = [
     method: 'POST',
     url: '/comment/activity/:activityId',
     handler: createCommentController
-  }
+  },
+  {
+    method: 'GET',
+    url: '/species',
+    handler: listSpecies,
+  },
 ];
 
 export default routes;
