@@ -8,7 +8,7 @@ import {
   listByUser,
   update as updatePet
 } from '../controllers/petController.js';
-import { create, listUserPermissionsByPetId } from '../controllers/userPermissionController.js';
+import { create, listUserPermissions, listUserPermissionsByPetId } from '../controllers/userPermissionController.js';
 import { createActivityController, createCommentController, listActivitiesByPetId } from '../controllers/activityController.js';
 import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
 
@@ -62,6 +62,12 @@ const routes: RouteOptions[] = [
     method: 'GET',
     url: '/permission/pet/:petId',
     handler: listUserPermissionsByPetId
+  },
+  {
+    method: 'GET',
+    url: '/permission/user/:userId',
+    handler: listUserPermissions
+
   },
   {
     method: 'POST',

@@ -23,3 +23,13 @@ export const findUserPermissionsByPetId = async (petId: string): Promise<IUserPe
 
   return newResponse as IUserPermission[];
 }
+export const findPetsByUserId = async (userId: string): Promise<string[]> => {
+  // Busca todas as permissões do usuário
+  const userPermissions = await UserPermission.find({ userId });
+
+  // Extrai apenas os petIds das permissões encontradas
+  const petIds = userPermissions.map((permission) => permission.petId);
+
+  return petIds;
+}
+
