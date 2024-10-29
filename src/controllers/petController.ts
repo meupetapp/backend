@@ -72,18 +72,18 @@ export const listByUser = async (req: FastifyRequest, reply: FastifyReply) => {
 export const getPetDetails = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
     const petId = (req.params as any).petId;
-    const userId = req.headers.authorization; 
-    
-    if (!userId) {
-      return reply.code(401).send({ message: "Usuário não fornecido."});
+    const user = await findUserByToken(req.headers.authorization || '');
+
+    if (!user) {
+      return reply.code(401).send({ message: "Usuário não autenticado." });
     }
 
-    // const hasPermission = await checkUserPermission(userId, petId);
-    
-    // if (!hasPermission) {
-    //   return reply.code(403).send({ message: "Você não tem permissão para acessar esse pet." });
-    // }
+    const hasPermission = await checkUserPermission(user.id, petId);
 
+    if (!hasPermission) {
+      return reply.code(403).send({ message: "Você não tem permissão para acessar esse pet." });
+    }
+    
     const pet = await Pet.findById(petId);
     const activities = await findActivitiesByPetId(petId);
 
