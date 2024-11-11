@@ -8,6 +8,9 @@ import {
   listByUser,
   update as updatePet
 } from '../controllers/petController.js';
+import { create } from '../controllers/userPermissionController.js';
+import { createActivityController, listActivitiesByPetId } from '../controllers/activityController.js';
+import { createNotificationController, getNotificationByUser } from '../controllers/notificationController.js';
 import { create, listUserPermissions, listUserPermissionsByPetId } from '../controllers/userPermissionController.js';
 import { createActivityController, createCommentController, listActivitiesByPetId } from '../controllers/activityController.js';
 import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
@@ -81,6 +84,13 @@ const routes: RouteOptions[] = [
   },
   {
     method: 'POST',
+    url: '/notification',
+    handler: createNotificationController
+  },
+  {
+    method: 'GET',
+    url: '/notification',
+    handler: getNotificationByUser
     url: '/generate-upload-url',
     handler: generateUploadUrl
   },
