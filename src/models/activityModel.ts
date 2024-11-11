@@ -11,6 +11,7 @@ export interface IActivity extends Document {
   updatedAt: Date;
   // notes: Note[];
   // createdByUserId: string;
+  comments: Array<{ text: string, userId: string, createdAt: Date, username: string }>;
   time: Date;
 }
 
@@ -32,7 +33,8 @@ const ActivitySchema: Schema = new Schema({
   petId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  time: { type: Date, required: true }
+  time: { type: Date, required: true },
+  comments: { type: Array, default: [] },
 });
 
 export default mongoose.model<IActivity>('Activity', ActivitySchema);

@@ -11,6 +11,9 @@ import {
 import { create } from '../controllers/userPermissionController.js';
 import { createActivityController, listActivitiesByPetId } from '../controllers/activityController.js';
 import { createNotificationController, getNotificationByUser } from '../controllers/notificationController.js';
+import { create, listUserPermissions, listUserPermissionsByPetId } from '../controllers/userPermissionController.js';
+import { createActivityController, createCommentController, listActivitiesByPetId } from '../controllers/activityController.js';
+import { generateUploadUrl, generateDownloadUrl } from '../controllers/awsController.js';
 
 const routes: RouteOptions[] = [
   {
@@ -59,6 +62,17 @@ const routes: RouteOptions[] = [
     handler: create
   },
   {
+    method: 'GET',
+    url: '/permission/pet/:petId',
+    handler: listUserPermissionsByPetId
+  },
+  {
+    method: 'GET',
+    url: '/permission/user/:userId',
+    handler: listUserPermissions
+
+  },
+  {
     method: 'POST',
     url: '/activity',
     handler: createActivityController
@@ -77,6 +91,18 @@ const routes: RouteOptions[] = [
     method: 'GET',
     url: '/notification',
     handler: getNotificationByUser
+    url: '/generate-upload-url',
+    handler: generateUploadUrl
+  },
+  {
+    method: 'GET',
+    url: '/get-download-url',
+    handler: generateDownloadUrl
+  },
+  {
+    method: 'POST',
+    url: '/comment/activity/:activityId',
+    handler: createCommentController
   }
 ];
 

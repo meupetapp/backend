@@ -20,8 +20,8 @@ mongoose.connect(process.env.MONGO_URI as string)
 
 const start = async (): Promise<void> => {
   try {
-    await fastify.listen({ port: parseInt(process.env.PORT as string), host: 'localhost' });
-    console.log(`Servidor rodando em http://localhost:${process.env.PORT}`);
+    await fastify.listen({ port: parseInt(process.env.PORT as string), host: '0.0.0.0' });
+    console.log(`Servidor rodando em http://0.0.0.0:${process.env.PORT}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

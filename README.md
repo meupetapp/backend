@@ -26,8 +26,12 @@ yarn install
 3. Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
 ```yaml 
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/carteira-de-pets
+MONGO_URI=mongodb://localhost:27017/carteira-de-pets
 JWT_SECRET=sua-chave-secreta-jwt
+AWS_ACCESS_KEY_ID=seu-id-aws
+AWS_SECRET_ACCESS_KEY=sua-chave-secreta-aws
+AWS_REGION=sua-regiao
+S3_BUCKET_NAME=seu-bucket
 ```
 4. Inicie o servidor:
 ```yaml 
